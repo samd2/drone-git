@@ -111,10 +111,6 @@ platform:
 steps:
 - name: build
   image: golang:1.10
-  volumes:
-    - name: dockersock
-      path: /var/run
-  privileged: true
   commands:
   - cd posix
   - tar -xf fixtures.tar -C /
@@ -122,6 +118,10 @@ steps:
 
 - name: publish
   image: thegeeklab/drone-docker-buildx
+  privileged: true
+  # volumes:
+  #  - name: dockersock
+  #    path: /var/run
   settings:
     experimental: true
     dockerfile: docker/Dockerfile.linux.s390x
@@ -137,10 +137,10 @@ steps:
     - push
     - tag
 
-volumes:
-- name: dockersock
-  host:
-    path: /var/run
+# volumes:
+# - name: dockersock
+#   host:
+#     path: /var/run
 
 # ---
 # kind: pipeline
