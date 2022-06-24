@@ -66,38 +66,38 @@ steps:
     - push
     - tag
 
----
-kind: pipeline
-type: docker
-name: linux-arm
-
-platform:
-  arch: arm
-  os: linux
-
-steps:
-- name: build
-  image: golang:1.10
-  commands:
-  - cd posix
-  - tar -xf fixtures.tar -C /
-  - go test -v
-
-- name: publish
-  image: plugins/docker:18
-  settings:
-    dockerfile: docker/Dockerfile.linux.arm
-    repo: samd2/git
-    auto_tag: "true"
-    auto_tag_suffix: linux-arm
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-  when:
-    event:
-    - push
-    - tag
+# ---
+# kind: pipeline
+# type: docker
+# name: linux-arm
+# 
+# platform:
+#   arch: arm
+#   os: linux
+# 
+# steps:
+# - name: build
+#   image: golang:1.10
+#   commands:
+#   - cd posix
+#   - tar -xf fixtures.tar -C /
+#   - go test -v
+# 
+# - name: publish
+#   image: plugins/docker:18
+#   settings:
+#     dockerfile: docker/Dockerfile.linux.arm
+#     repo: samd2/git
+#     auto_tag: "true"
+#     auto_tag_suffix: linux-arm
+#     username:
+#       from_secret: docker_username
+#     password:
+#       from_secret: docker_password
+#   when:
+#     event:
+#     - push
+#     - tag
 
 ---
 kind: pipeline
@@ -111,6 +111,7 @@ platform:
 steps:
 - name: build
   image: golang:1.10
+  privileged: true
   commands:
   - cd posix
   - tar -xf fixtures.tar -C /
@@ -253,7 +254,7 @@ trigger:
 depends_on:
 - linux-amd64
 - linux-arm64
-- linux-arm
+# - linux-arm
 # - windows-1909-amd64
 # - windows-1903-amd64
 # - windows-1809-amd64

@@ -18,17 +18,22 @@ manifests:
       architecture: arm64
       os: linux
   -
-    image: samd2/git:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm
+    image: samd2/git:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-s390x
     platform:
-      variant: v7
-      architecture: arm
+      architecture: s390x
       os: linux
-  -
-    image: samd2/git:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm
-    platform:
-      variant: v6
-      architecture: arm
-      os: linux
+#   -
+#     image: samd2/git:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm
+#     platform:
+#       variant: v7
+#       architecture: arm
+#       os: linux
+#   -
+#     image: samd2/git:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm
+#     platform:
+#       variant: v6
+#       architecture: arm
+#       os: linux
 #   -
 #     image: drone/git:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}windows-1803-amd64
 #     platform:
