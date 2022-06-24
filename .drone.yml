@@ -137,6 +137,11 @@ steps:
     - push
     - tag
 
+volumes:
+- name: dockersock
+  host:
+    path: /var/run
+
 # ---
 # kind: pipeline
 # type: ssh
