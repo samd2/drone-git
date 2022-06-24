@@ -123,6 +123,7 @@ steps:
 - name: publish
   image: thegeeklab/drone-docker-buildx
   settings:
+    experimental: true
     dockerfile: docker/Dockerfile.linux.s390x
     repo: samd2/git
     auto_tag: "true"
