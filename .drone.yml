@@ -99,6 +99,39 @@ steps:
     - push
     - tag
 
+---
+kind: pipeline
+type: docker
+name: linux-s390x
+
+platform:
+  arch: arm
+  os: linux
+
+steps:
+- name: build
+  image: golang:1.10
+  commands:
+  - cd posix
+  - tar -xf fixtures.tar -C /
+  - go test -v
+
+- name: publish
+  image: thegeeklab/drone-docker-buildx
+  settings:
+    dockerfile: docker/Dockerfile.linux.s390x
+    repo: samd2/git
+    auto_tag: "true"
+    auto_tag_suffix: linux-s390x
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    event:
+    - push
+    - tag
+
 # ---
 # kind: pipeline
 # type: ssh
