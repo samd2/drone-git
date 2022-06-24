@@ -126,6 +126,8 @@ steps:
     experimental: true
     dockerfile: docker/Dockerfile.linux.s390x
     repo: samd2/git
+    platforms:
+      - linux/s390x
     auto_tag: "true"
     auto_tag_suffix: linux-s390x
     username:
