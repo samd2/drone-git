@@ -132,7 +132,7 @@ steps:
     - whoami
     - which docker
     - cat /etc/docker/daemon.json
-    - echo "{ "experimental": true }" > /etc/docker/daemon.json
+    - echo '{ "experimental": true }' > /etc/docker/daemon.json
     - systemctl restart docker
     - apt-get install -y jq
     - mkdir -p ~/.docker/cli-plugins
