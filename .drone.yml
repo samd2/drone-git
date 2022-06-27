@@ -117,40 +117,76 @@ steps:
 
 ---
 kind: pipeline
-type: docker
+type: vm
 name: linux-s390x
 
-platform:
-  arch: amd64
-  os: linux
+pool:
+  use: ubuntu-20.04
 
 steps:
 - name: build
-  image: golang:1.10
   commands:
-  - cd posix
-  - tar -xf fixtures.tar -C /
-  - go test -v
-
-- name: publish
-  image: thegeeklab/drone-docker-buildx
-  privileged: true
-  settings:
-    # experimental: true
-    dockerfile: docker/Dockerfile.linux.s390x
-    repo: samd2/git
-    platforms:
-      - linux/s390x
-    auto_tag: "true"
-    auto_tag_suffix: linux-s390x
-    username:
-      from_secret: docker_username
-    password:
+  - pwd
+  - ls -al
+  - whoami
+  - which docker
+  - cat /etc/docker/daemon.json
+  - echo "{ "experimental": true }" > /etc/docker/daemon.json
+  - systemctl restart docker
+  - apt-get install -y jq
+  - mkdir -p ~/.docker/cli-plugins
+  - export BUILDX_URL=$(curl https://api.github.com/repos/docker/buildx/releases/latest | jq -r '.assets[].browser_download_url' | grep amd64)
+  - wget $BUILDX_URL -O ~/.docker/cli-plugins/docker-buildx
+  - chmod +x ~/.docker/cli-plugins/docker-buildx
+  - ls -al ~/.docker/cli-plugins/docker-buildx
+  - apt-get install -y binfmt-support qemu-user-static
+  - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+  - docker login -u $env:USERNAME -p $env:PASSWORD
+  # - docker buildx build --platform linux/amd64,linux/arm64 -t cppalliance/demo-multiarch:2 --push .
+  - docker buildx build --rm=true -f docker/Dockerfile.linux.s390x . --push --pull=true --platform linux/s390x -t samd2/git:linux-s390x
+  environment:
+    PASSWORD:
       from_secret: docker_password
-  when:
-    event:
-    - push
-    - tag
+    USERNAME:
+      from_secret: docker_username
+
+# thegeeklab version:
+# ---
+# kind: pipeline
+# type: docker
+# name: linux-s390x
+# 
+# platform:
+#   arch: amd64
+#   os: linux
+# 
+# steps:
+# - name: build
+#   image: golang:1.10
+#   commands:
+#   - cd posix
+#   - tar -xf fixtures.tar -C /
+#   - go test -v
+# 
+# - name: publish
+#   image: thegeeklab/drone-docker-buildx
+#   privileged: true
+#   settings:
+#     # experimental: true
+#     dockerfile: docker/Dockerfile.linux.s390x
+#     repo: samd2/git
+#     platforms:
+#       - linux/s390x
+#     auto_tag: "true"
+#     auto_tag_suffix: linux-s390x
+#     username:
+#       from_secret: docker_username
+#     password:
+#       from_secret: docker_password
+#   when:
+#     event:
+#     - push
+#     - tag
 
 # ---
 # kind: pipeline
