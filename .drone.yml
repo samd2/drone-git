@@ -110,16 +110,7 @@ pool:
 steps:
 - name: build
   commands:
-    - set -xe
-    - pwd
-    - echo "hello"
-    - ls -al
-    - whoami
-    - which docker
-    - rm ~/.docker/cli-plugins/* || true
-    # - daemoncontents='{ "experimental": true }'
-    # - echo $daemoncontents > /etc/docker/daemon.json
-    - systemctl restart docker
+    - apt-get update
     - apt-get install -y jq
     - mkdir -p ~/.docker/cli-plugins
     - export BUILDX_URL=$(curl https://api.github.com/repos/docker/buildx/releases/latest | jq -r '.assets[].browser_download_url' | grep linux-amd64)
