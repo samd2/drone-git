@@ -125,7 +125,9 @@ pool:
 steps:
 - name: build
   commands:
+    - set -xe
     - pwd
+    - echo "hello"
     - ls -al
     - whoami
     - which docker
