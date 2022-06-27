@@ -13,6 +13,8 @@ steps:
   commands:
   - pwd
   - ls -al
+  - whoami
+  - which docker
 
 ---
 kind: pipeline
