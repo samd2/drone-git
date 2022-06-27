@@ -128,16 +128,13 @@ steps:
     - ls -al ~/.docker/cli-plugins/
     - apt-get install -y binfmt-support qemu-user-static
     - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-    - echo qq
-    - echo qq
-    - echo qq
+    - docker login -u USERNAME -p PASSWORD
     - docker buildx build --rm=true -f docker/Dockerfile.linux.s390x . --push --pull=true --platform linux/s390x -t samd2/git:linux-s390x
-
-# environment:
-#   PASSWORD:
-#     from_secret: docker_password
-#   USERNAME:
-#     from_secret: docker_username
+  environment:
+    PASSWORD:
+      from_secret: docker_password
+    USERNAME:
+      from_secret: docker_username
 # thegeeklab version:
 # ---
 # kind: pipeline
