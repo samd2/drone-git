@@ -117,8 +117,8 @@ steps:
     - whoami
     - which docker
     - rm ~/.docker/cli-plugins/*
-    - daemoncontents='{ "experimental": true }'
-    - echo $daemoncontents > /etc/docker/daemon.json
+    # - daemoncontents='{ "experimental": true }'
+    # - echo $daemoncontents > /etc/docker/daemon.json
     - systemctl restart docker
     - apt-get install -y jq
     - mkdir -p ~/.docker/cli-plugins
