@@ -114,7 +114,6 @@ steps:
 #     event:
 #     - push
 #     - tag
-
 ---
 kind: pipeline
 type: vm
@@ -143,11 +142,11 @@ steps:
     - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
     - docker login -u $env:USERNAME -p $env:PASSWORD
     - docker buildx build --rm=true -f docker/Dockerfile.linux.s390x . --push --pull=true --platform linux/s390x -t samd2/git:linux-s390x
-  environment:
-    PASSWORD:
-      from_secret: docker_password
-    USERNAME:
-      from_secret: docker_username
+  # environment:
+  #   PASSWORD:
+  #     from_secret: docker_password
+  #   USERNAME:
+  #     from_secret: docker_username
 
 # thegeeklab version:
 # ---
