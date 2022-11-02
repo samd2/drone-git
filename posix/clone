@@ -94,7 +94,7 @@ git_clone_retry(){
 		exit 1
 	fi
 
-	echo "Cloning with ${retries} retries"
+	echo "Cloning with ${retries} retries.."
 	n=0
 	until [ "$n" -gt "${retries}" ]; do
 		$1 && return
