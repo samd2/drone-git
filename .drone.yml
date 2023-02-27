@@ -22,7 +22,7 @@ steps:
     image: plugins/docker:18
     settings:
       dockerfile: docker/Dockerfile.linux.amd64
-      repo: drone/git
+      repo: samd2/git
       auto_tag: "true"
       auto_tag_suffix: linux-amd64
       username:
@@ -58,7 +58,7 @@ steps:
     image: plugins/docker:18
     settings:
       dockerfile: docker/Dockerfile.linux.arm64
-      repo: drone/git
+      repo: samd2/git
       auto_tag: "true"
       auto_tag_suffix: linux-arm64
       username:
@@ -87,7 +87,7 @@ steps:
     image: plugins/docker
     settings:
       dockerfile: docker/Dockerfile.windows.1809
-      repo: drone/git
+      repo: samd2/git
       username:
         from_secret: docker_username
       password:
@@ -118,7 +118,7 @@ steps:
     image: plugins/docker
     settings:
       dockerfile: docker/Dockerfile.windows.ltsc2022
-      repo: drone/git
+      repo: samd2/git
       username:
         from_secret: docker_username
       password:
